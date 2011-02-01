@@ -282,7 +282,7 @@ public class CMTTxInterceptor
       Transaction tx = tm.getTransaction();
       if (tx == null)
       {
-         throw new EJBTransactionRequiredException(invocation.getMethod().toString());
+         throw new EJBTransactionRequiredException("Transaction is required for invocation: " + invocation);
       }
       return invokeInCallerTx(invocation, tx);
    }
