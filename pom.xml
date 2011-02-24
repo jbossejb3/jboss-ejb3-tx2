@@ -129,8 +129,8 @@
    </properties>
 
    <scm>
-      <connection>scm:git:git://github.com/wolfc/jboss-ejb3-tx2.git</connection>
-      <developerConnection>scm:git:git@github.com:wolfc/jboss-ejb3-tx2.git</developerConnection>
-      <url>http://github.com/wolfc/jboss-ejb3-tx2</url>
+      <connection>scm:git:git://github.com:jbossejb3/jboss-ejb3-tx2.git</connection>
+      <developerConnection>scm:git:git@github.com:jbossejb3/jboss-ejb3-tx2.git</developerConnection>
+      <url>http://github.com/jbossejb3/jboss-ejb3-tx2</url>
    </scm>
 </project>
