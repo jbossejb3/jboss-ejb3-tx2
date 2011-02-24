@@ -26,7 +26,10 @@ import org.jboss.aop.InstanceAdvisor;
 import org.jboss.aop.advice.AspectFactory;
 import org.jboss.aop.joinpoint.Joinpoint;
 
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.transaction.TransactionManager;
+
 
 /**
  * @author <a href="mailto:cdewolf@redhat.com">Carlo de Wolf</a>
@@ -42,6 +45,12 @@ public class CMTTxInterceptorFactory implements AspectFactory
 
    public Object createPerClass(Advisor advisor)
    {
+      TransactionManagementType txManagementType = this.getTransactionManagementType(advisor);
+      // if it's not CMT tx management, then just return a no-op interceptor
+      if (txManagementType != TransactionManagementType.CONTAINER)
+      {
+         return new NoOpInterceptor();
+      }
       // Iny Mini Miny Moe
       return new CMTTxInterceptorWrapper(getTransactionManager());
    }
@@ -65,9 +74,10 @@ public class CMTTxInterceptorFactory implements AspectFactory
    {
       return getClass().getName();
    }
-   
+
    /**
     * Returns the TransactionManager
+    *
     * @return
     */
    private TransactionManager getTransactionManager()
@@ -77,5 +87,15 @@ public class CMTTxInterceptorFactory implements AspectFactory
          this.transactionManager = TxUtil.getTransactionManager();
       }
       return this.transactionManager;
+   }
+
+   private TransactionManagementType getTransactionManagementType(Advisor advisor)
+   {
+      TransactionManagement transactionManagement = (TransactionManagement) advisor.resolveAnnotation(TransactionManagement.class);
+      if (transactionManagement == null)
+      {
+         return TransactionManagementType.CONTAINER;
+      }
+      return transactionManagement.value();
    }
 }

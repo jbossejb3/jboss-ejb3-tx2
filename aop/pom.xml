@@ -33,5 +33,12 @@
          <artifactId>jboss-ejb3-tx2-impl</artifactId>
          <version>${project.version}</version>
       </dependency>
+
+      <dependency>
+         <groupId>org.jboss.spec.javax.ejb</groupId>
+         <artifactId>jboss-ejb-api_3.1_spec</artifactId>
+         <version>1.0.0.Final</version>
+      </dependency>
+      
    </dependencies>
 </project>
